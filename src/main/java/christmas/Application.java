@@ -1,7 +1,10 @@
 package christmas;
 
+import christmas.controller.WoowaChristmasPromotionController;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        WoowaChristmasPromotionController woowaEvent = new WoowaChristmasPromotionController();
+        woowaEvent.EventFlow();
     }
 }
