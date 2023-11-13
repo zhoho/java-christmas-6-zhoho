@@ -11,16 +11,17 @@ public class MenuGet {
             parts = order.split("-");
             String itemName = parts[0];
             int quantity = Integer.parseInt(parts[1]);
-            menuValidate(itemName);
+//            menuValidate(itemName);
             OutputView.printMenu(itemName, quantity);
+            Calculate.getOriginTotalPrice(itemName, quantity);
         }
     }
 
-    public static void menuValidate(String itemName) {
-        try {
-            Constants.Menu menu = Constants.Menu.valueOf(itemName);
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-        }
-    }
+//    public static void menuValidate(String itemName) {
+//        try {
+//            Constants.Menu menu = Constants.Menu.valueOf(itemName);
+//        } catch (IllegalArgumentException e) {
+//            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+//        }
+//    }
 }

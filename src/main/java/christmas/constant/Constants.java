@@ -34,5 +34,13 @@ public class Constants {
             return price;
         }
     }
+    public static int getPriceForMenu(String menuName) {
+        for (Menu menu : Menu.values()) {
+            if (menu.getName().equals(menuName)) {
+                return menu.getPrice();
+            }
+        }
+        throw new IllegalArgumentException("[ERROR] 메뉴가 없습니다: " + menuName);
+    }
 
 }
