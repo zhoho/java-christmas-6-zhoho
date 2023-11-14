@@ -1,5 +1,6 @@
 package christmas.view;
 
+import christmas.model.Badge;
 import christmas.model.Calculate;
 import christmas.model.Discount;
 import christmas.model.Event;
@@ -59,8 +60,17 @@ public class OutputView {
         System.out.println("\n<총혜택 금액>\n-" + totalBenefit + "원");
     }
 
-    public static void getCalculateTotalBenefit() {
+    public static void printEventBadge() {
+        System.out.println("\n<12월 이벤트 배지>\n" + Badge.eventBadge());
+
+    }
+
+    public static void CalculateTotalBenefit() {
         calculateTotalBenefit = Discount.calculateTotalBenefit();
+    }
+
+    public static int getCalculateTotalBeneit() {
+        return calculateTotalBenefit;
     }
     public static String formatChanger(int num) {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
