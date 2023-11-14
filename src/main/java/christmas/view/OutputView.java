@@ -1,6 +1,9 @@
 package christmas.view;
 
 import christmas.model.Calculate;
+import christmas.model.Event;
+
+import java.text.DecimalFormat;
 
 public class OutputView {
     public static void printWelcomeToEvent() {
@@ -19,7 +22,23 @@ public class OutputView {
     }
 
     public static void printoriginTotalPrice() {
-        int originTotalPrice = Calculate.getOriginTotalPrice();
-        System.out.println("<할인 전 총주문 금액>\n" + originTotalPrice + "원");
+        String originTotalPrice = totalPriceFormat();
+        System.out.println("\n<할인 전 총주문 금액>\n" + originTotalPrice + "원");
+    }
+
+    public static String totalPriceFormat() {
+        int num = Calculate.getOriginTotalPrice();
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        String originTotalPrice = decimalFormat.format(num);
+        return originTotalPrice;
+    }
+
+    public static void printBenefitProduct() {
+        String output = Event.benefitProduct();
+        System.out.println("<증정 메뉴>\n"+output);
+    }
+
+    public static void printBenefitList() {
+
     }
 }
