@@ -10,6 +10,7 @@ public class Discount {
     static int TotalBenefit;
     static int givingMenuDiscount;
     static int weekDiscount;
+    static int weekendDiscount;
     static int specialDiscount;
     static int christmasDdayDiscount;
     static ArrayList<String> Benefits = new ArrayList<>();
@@ -29,9 +30,16 @@ public class Discount {
          Benefits.add("평일 할인: -"+ OutputView.formatChanger(dessertDiscount) + "원");
          return dessertDiscount;
      }
-        int mainDiscount = MenuGet.getMainDiscount();
-        Benefits.add("주말 할인: -"+ OutputView.formatChanger(mainDiscount) + "원");
-        return mainDiscount;
+        return 0;
+    }
+
+    public static int calculateWeekendDiscount() {
+        if (visitDate % 7 == 1 || visitDate % 7 == 2) {
+            int mainDiscount = MenuGet.getMainDiscount();
+            Benefits.add("주말 할인: -"+ OutputView.formatChanger(mainDiscount) + "원");
+            return mainDiscount;
+        }
+        return 0;
     }
 
     public static int calculateSpecialDiscount() {
@@ -46,6 +54,7 @@ public class Discount {
         TotalBenefit = 0;
         givingMenuDiscount = 0;
         weekDiscount = calculateWeekDiscount();
+        weekendDiscount = calculateWeekendDiscount();
         specialDiscount = calculateSpecialDiscount();
         christmasDdayDiscount = calculateChristmasDdayDiscount();
 
@@ -53,7 +62,7 @@ public class Discount {
             givingMenuDiscount = 25000;
         };
 
-        TotalBenefit = givingMenuDiscount + weekDiscount + specialDiscount + christmasDdayDiscount;
+        TotalBenefit = givingMenuDiscount + weekDiscount + weekendDiscount + specialDiscount + christmasDdayDiscount;
         return TotalBenefit;
     }
 

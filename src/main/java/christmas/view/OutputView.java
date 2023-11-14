@@ -6,6 +6,7 @@ import christmas.model.Discount;
 import christmas.model.Event;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 public class OutputView {
     static int originPrice;
@@ -45,8 +46,15 @@ public class OutputView {
         System.out.println("\n<증정 메뉴>\n"+givingMenu);
     }
 
-    public static void printBenefitList() {
-        System.out.println("\n<혜택 내역>\n"+Discount.checkBenefits());
+    public static void printBenefits() {
+        ArrayList<String> benefits = Discount.checkBenefits();
+        System.out.println("\n<혜택 내역>");
+        if(benefits.isEmpty()) {
+            benefits.add("없음");
+        }
+        for(String benefit : benefits) {
+            System.out.println(benefit);
+        }
     }
 
     public static void printTotalExpectedPrice() {
