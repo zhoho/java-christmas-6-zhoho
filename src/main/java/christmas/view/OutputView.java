@@ -1,6 +1,7 @@
 package christmas.view;
 
 import christmas.model.Calculate;
+import christmas.model.Discount;
 import christmas.model.Event;
 
 import java.text.DecimalFormat;
@@ -34,11 +35,26 @@ public class OutputView {
     }
 
     public static void printBenefitProduct() {
-        String output = Event.benefitProduct();
-        System.out.println("<증정 메뉴>\n"+output);
+        String givingMenu = "없음";
+        if(Event.benefitProduct()) {
+            givingMenu = "샴페인 1개";
+        };
+        System.out.println("\n<증정 메뉴>\n"+givingMenu);
     }
 
     public static void printBenefitList() {
 
     }
+
+    public static void printTotalBenefit() {
+        String totalBenefit = formatChanger(Discount.calculateTotalBenefit());
+        System.out.println("\n<총혜택 금액>\n-" + totalBenefit);
+    }
+
+    public static String formatChanger(int num) {
+        DecimalFormat decimalFormat = new DecimalFormat("#,###");
+        String originTotalPrice = decimalFormat.format(num);
+        return originTotalPrice;
+    }
+
 }
