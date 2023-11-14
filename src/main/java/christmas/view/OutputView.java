@@ -7,6 +7,8 @@ import christmas.model.Event;
 import java.text.DecimalFormat;
 
 public class OutputView {
+    static int originPrice;
+    static int calculateTotalBenefit;
     public static void printWelcomeToEvent() {
         System.out.println("안녕하세요! 우테코 식당 12월 이벤트 플래너입니다.");
     }
@@ -28,9 +30,9 @@ public class OutputView {
     }
 
     public static String totalPriceFormat() {
-        int num = Calculate.getOriginTotalPrice();
+        originPrice = Calculate.getOriginTotalPrice();
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
-        String originTotalPrice = decimalFormat.format(num);
+        String originTotalPrice = decimalFormat.format(originPrice);
         return originTotalPrice;
     }
 
@@ -43,18 +45,26 @@ public class OutputView {
     }
 
     public static void printBenefitList() {
+        System.out.println("\n<혜택 내역>\n"+Discount.checkBenefits());
+    }
 
+    public static void printTotalExpectedPrice() {
+        int num = originPrice - calculateTotalBenefit + Event.benefitProductExistence();
+        String totalExpectedPrice = formatChanger(num);
+        System.out.println("\n<할인 후 예상 결제 금액>\n" + totalExpectedPrice +"원");
     }
 
     public static void printTotalBenefit() {
-        String totalBenefit = formatChanger(Discount.calculateTotalBenefit());
-        System.out.println("\n<총혜택 금액>\n-" + totalBenefit);
+        String totalBenefit = formatChanger(calculateTotalBenefit);
+        System.out.println("\n<총혜택 금액>\n-" + totalBenefit + "원");
     }
 
+    public static void getCalculateTotalBenefit() {
+        calculateTotalBenefit = Discount.calculateTotalBenefit();
+    }
     public static String formatChanger(int num) {
         DecimalFormat decimalFormat = new DecimalFormat("#,###");
         String originTotalPrice = decimalFormat.format(num);
         return originTotalPrice;
     }
-
 }
