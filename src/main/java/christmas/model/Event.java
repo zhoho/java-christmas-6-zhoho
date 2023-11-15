@@ -21,4 +21,8 @@ public class Event {
             Discount.Benefits.add("증정 이벤트: -"+ OutputView.formatChanger(25000) + "원");
         }
     }
+
+    public static void checkEventPossibility() {
+
+    }
 }
