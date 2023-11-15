@@ -1,5 +1,6 @@
 package christmas.model;
 
+import christmas.constant.Numbers;
 import christmas.view.OutputView;
 
 import java.util.ArrayList;
@@ -14,54 +15,71 @@ public class Discount {
     static int specialDiscount;
     static int christmasDdayDiscount;
     static ArrayList<String> Benefits = new ArrayList<>();
+
+    public enum PrintBenefits {
+        CHISTMASDDAYDISCOUNT("크리스마스 디데이 할인: -"),
+        WEEKDAYDISCOUNT("평일 할인: -"),
+        WEEKENDDISCOUNT("주말 할인: -"),
+        SPECIALDISCOUNT("특별 할인: -"),
+        GIVINGEVENT("증정 이벤트: -"),
+        ;
+        private final String label;
+
+        PrintBenefits(String label) {
+            this.label = label;
+        }
+
+        public String label() {
+            return label;
+        }
+    }
     public static int calculateChristmasDdayDiscount() {
-        if(visitDate < 26) {
-            int christmasDdayDiscount = 900;
-            christmasDdayDiscount += visitDate * 100;
-            Benefits.add("크리스마스 디데이 할인: -"+ OutputView.formatChanger(christmasDdayDiscount) + "원");
+        if(visitDate < Numbers.CHRISTMASDDAYEND) {
+            int christmasDdayDiscount = Numbers.CHRISTMASDDAYSTARTING;
+            christmasDdayDiscount += visitDate * Numbers.CHRISTMASDDAYEVENT;
+            Benefits.add(PrintBenefits.CHISTMASDDAYDISCOUNT.label() + OutputView.formatChanger(christmasDdayDiscount) + OutputView.PrintOutputMessage.WON.label());
             return christmasDdayDiscount;
         }
-        return 0;
+        return Numbers.ZERO;
     }
 
     public static int calculateWeekDiscount() {
-     if (visitDate % 7 == 1 || visitDate % 7 == 2) {
+     if (visitDate % Numbers.WEEK == Numbers.THREE || visitDate % Numbers.WEEK == Numbers.FOUR || visitDate % Numbers.WEEK == Numbers.FIVE || visitDate % Numbers.WEEK == Numbers.SIX || visitDate % Numbers.WEEK == Numbers.ZERO) {
          int dessertDiscount = MenuGet.getDessertDiscount();
-         Benefits.add("평일 할인: -"+ OutputView.formatChanger(dessertDiscount) + "원");
+         Benefits.add(PrintBenefits.WEEKDAYDISCOUNT.label() + OutputView.formatChanger(dessertDiscount) + OutputView.PrintOutputMessage.WON.label());
          return dessertDiscount;
      }
-        return 0;
+        return Numbers.ZERO;
     }
 
     public static int calculateWeekendDiscount() {
-        if (visitDate % 7 == 1 || visitDate % 7 == 2) {
+        if (visitDate % Numbers.WEEK == Numbers.ONE || visitDate % Numbers.WEEK == Numbers.TWO) {
             int mainDiscount = MenuGet.getMainDiscount();
-            Benefits.add("주말 할인: -"+ OutputView.formatChanger(mainDiscount) + "원");
+            Benefits.add(PrintBenefits.WEEKENDDISCOUNT.label() + OutputView.formatChanger(mainDiscount) + OutputView.PrintOutputMessage.WON.label());
             return mainDiscount;
         }
-        return 0;
+        return Numbers.ZERO;
     }
 
     public static int calculateSpecialDiscount() {
-        if (visitDate % 7 == 3 || visitDate == 25) {
-            Benefits.add("특별 할인: -"+ OutputView.formatChanger(1000) + "원");
-            return 1000;
+        if (visitDate % Numbers.WEEK == Numbers.THREE || visitDate == Numbers.CHRISTMAS) {
+            Benefits.add(PrintBenefits.SPECIALDISCOUNT.label() + OutputView.formatChanger(Numbers.SPECIALDISCOUNT) + OutputView.PrintOutputMessage.WON.label());
+            return Numbers.SPECIALDISCOUNT;
         }
-        return 0;
+        return Numbers.ZERO;
     }
 
     public static int calculateTotalBenefit() {
-        TotalBenefit = 0;
-        givingMenuDiscount = 0;
+        TotalBenefit = Numbers.ZERO;
+        givingMenuDiscount = Numbers.ZERO;
         weekDiscount = calculateWeekDiscount();
         weekendDiscount = calculateWeekendDiscount();
         specialDiscount = calculateSpecialDiscount();
         christmasDdayDiscount = calculateChristmasDdayDiscount();
 
         if(Event.benefitProduct()) {
-            givingMenuDiscount = 25000;
+            givingMenuDiscount = Numbers.CHAMPAGNEPRICE;
         };
-
         TotalBenefit = givingMenuDiscount + weekDiscount + weekendDiscount + specialDiscount + christmasDdayDiscount;
         return TotalBenefit;
     }

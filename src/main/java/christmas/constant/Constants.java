@@ -53,7 +53,7 @@ public class Constants {
                 return menu.getPrice();
             }
         }
-        throw new IllegalArgumentException("[ERROR] 메뉴가 없습니다: " + menuName);
+        throw new IllegalArgumentException(ErrorMessage.PrintErrorMessage.INVAILDORDER.label());
     }
 
 }

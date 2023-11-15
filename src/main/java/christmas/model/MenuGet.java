@@ -1,20 +1,23 @@
 package christmas.model;
-
 import christmas.constant.Constants;
+import christmas.constant.ErrorMessage;
+import christmas.constant.Numbers;
 import christmas.view.OutputView;
 public class MenuGet {
     static String[] orders;
     static String[] userOrders;
     static int mainMenuDiscount;
     static int dessertMenuDiscount;
+    private static final String menuSplit = ",";
+    private static final String amoutSplit = "-";
     public static void menuCheck(String menuOrder) {
         String[] parts;
-        orders = menuOrder.split(",");
+        orders = menuOrder.split(menuSplit);
         menuNames();
         for (String order : orders) {
-            parts = order.split("-");
-            String itemName = parts[0];
-            int quantity = Integer.parseInt(parts[1]);
+            parts = order.split(amoutSplit);
+            String itemName = parts[Numbers.ZERO];
+            int quantity = Integer.parseInt(parts[Numbers.ONE]);
             OutputView.printMenu(itemName, quantity);
             Calculate.getOriginTotalPrice(itemName, quantity);
             countingDessertmenu(quantity);
@@ -25,27 +28,27 @@ public class MenuGet {
 
     public static void menuNames() {
         userOrders = new String[orders.length];
-        for (int i = 0; i < orders.length; i++) {
-            userOrders[i] = orders[i].split("-")[0];
+        for (int i = Numbers.ZERO; i < orders.length; i++) {
+            userOrders[i] = orders[i].split(amoutSplit)[Numbers.ZERO];
         }
     }
 
     public static void countingDessertmenu(int quantity) {
-        dessertMenuDiscount = 0;
+        dessertMenuDiscount = Numbers.ZERO;
         for (String order : userOrders) {
             Constants.Menu menu = findMenuByName(order);
             if(menu.getType().equals(Constants.MenuType.DESSERT)) {
-                dessertMenuDiscount += 2023 * quantity;
+                dessertMenuDiscount += Numbers.EVENTYEAR * quantity;
             }
         }
     }
 
     public static void countingMainmenu(int quantity) {
-        mainMenuDiscount = 0;
+        mainMenuDiscount = Numbers.ZERO;
         for (String order : userOrders) {
             Constants.Menu menu = findMenuByName(order);
             if(menu.getType().equals(Constants.MenuType.MAIN)) {
-                mainMenuDiscount += 2023 * quantity;
+                mainMenuDiscount += Numbers.EVENTYEAR * quantity;
             }
         }
     }
@@ -56,7 +59,7 @@ public class MenuGet {
                 return menu;
             }
         }
-        throw new IllegalArgumentException("[ERROR] 메뉴가 없습니다: " + menuName);
+        throw new IllegalArgumentException(ErrorMessage.PrintErrorMessage.INVAILDMENU.label());
     }
 
     private static void checkAllBeverage() {
@@ -66,7 +69,7 @@ public class MenuGet {
                 return;
             }
         }
-        throw new IllegalArgumentException("[ERROR] 음료만 주문 시, 주문할 수 없습니다.");
+        throw new IllegalArgumentException(ErrorMessage.PrintErrorMessage.INVAILDONLYDRINK.label());
     }
 
     public static int getDessertDiscount() {
