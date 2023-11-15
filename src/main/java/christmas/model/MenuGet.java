@@ -2,9 +2,6 @@ package christmas.model;
 
 import christmas.constant.Constants;
 import christmas.view.OutputView;
-
-import java.util.Arrays;
-
 public class MenuGet {
     static String[] orders;
     static String[] userOrders;
@@ -23,6 +20,7 @@ public class MenuGet {
             countingDessertmenu(quantity);
             countingMainmenu(quantity);
         }
+        checkAllBeverage();
     }
 
     public static void menuNames() {
@@ -59,6 +57,16 @@ public class MenuGet {
             }
         }
         throw new IllegalArgumentException("[ERROR] 메뉴가 없습니다: " + menuName);
+    }
+
+    private static void checkAllBeverage() {
+        for (String order : userOrders) {
+            Constants.Menu menu = findMenuByName(order);
+            if (!menu.getType().equals(Constants.MenuType.BEVERAGE)) {
+                return;
+            }
+        }
+        throw new IllegalArgumentException("[ERROR] 음료만 주문 시, 주문할 수 없습니다.");
     }
 
     public static int getDessertDiscount() {

@@ -3,11 +3,6 @@ package christmas.view;
 import camp.nextstep.edu.missionutils.Console;
 import christmas.constant.Constants;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
 public class InputView {
 
     public static int readDate() {
@@ -30,6 +25,7 @@ public class InputView {
             try {
                 validateMenuFormat(input);
                 validateValidMenu(input);
+                validateOrderAmount(input);
                 return input;
             } catch (IllegalArgumentException e) {
                 System.out.println(e.getMessage());
@@ -66,6 +62,18 @@ public class InputView {
             if (!isValidMenu(menu)) {
                 throw new IllegalArgumentException("[ERROR] 유효하지 않은 메뉴가 있습니다. 다시 입력해 주세요.");
             }
+        }
+    }
+
+    private static void validateOrderAmount(String input) {
+        String[] items = input.split(",");
+        int orderAmount = 0;
+        for (String item : items) {
+            String[] parts = item.split("-");
+            orderAmount += Integer.parseInt(parts[1]);
+            }
+        if(orderAmount > 20) {
+            throw new IllegalArgumentException("[ERROR] 메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다.");
         }
     }
 
