@@ -46,6 +46,9 @@ public class Discount {
     public static int calculateWeekDiscount() {
      if (visitDate % Numbers.WEEK == Numbers.THREE || visitDate % Numbers.WEEK == Numbers.FOUR || visitDate % Numbers.WEEK == Numbers.FIVE || visitDate % Numbers.WEEK == Numbers.SIX || visitDate % Numbers.WEEK == Numbers.ZERO) {
          int dessertDiscount = MenuGet.getDessertDiscount();
+         if(dessertDiscount == Numbers.ZERO) {
+             return Numbers.ZERO;
+         }
          Benefits.add(PrintBenefits.WEEKDAYDISCOUNT.label() + OutputView.formatChanger(dessertDiscount) + OutputView.PrintOutputMessage.WON.label());
          return dessertDiscount;
      }
@@ -55,6 +58,9 @@ public class Discount {
     public static int calculateWeekendDiscount() {
         if (visitDate % Numbers.WEEK == Numbers.ONE || visitDate % Numbers.WEEK == Numbers.TWO) {
             int mainDiscount = MenuGet.getMainDiscount();
+            if(mainDiscount == Numbers.ZERO) {
+                return Numbers.ZERO;
+            }
             Benefits.add(PrintBenefits.WEEKENDDISCOUNT.label() + OutputView.formatChanger(mainDiscount) + OutputView.PrintOutputMessage.WON.label());
             return mainDiscount;
         }

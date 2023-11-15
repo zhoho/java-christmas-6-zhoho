@@ -22,7 +22,7 @@ public class OutputView {
         PRINTEXPECTEDPRICE("\n<할인 후 예상 결제 금액>\n"),
         PRINTTOTALPRICE("\n<총혜택 금액>\n-"),
         PRINTEVENTBADGE("\n<12월 이벤트 배지>\n"),
-        DECEMBER("12월"),
+        DECEMBER("12월 "),
         NUMBEROF("개"),
         WON("원"),
         X("없음"),
@@ -45,14 +45,15 @@ public class OutputView {
     }
 
     public static void printShowDateOfEvent(int date) {
-        System.out.println(PrintOutputMessage.DECEMBER.label() + LINE_SEPARATOR + date + PrintOutputMessage.PRINTSEETHEEVENT.label());
+        System.out.println(PrintOutputMessage.DECEMBER.label() + date + PrintOutputMessage.PRINTSEETHEEVENT.label());
     }
 
     public static void printMenuSetting() {
         System.out.println(PrintOutputMessage.PRINTORDERMENU.label());
     }
+
     public static void printMenu(String itemName, int quantity) {
-        System.out.println(itemName + LINE_SEPARATOR + quantity + PrintOutputMessage.NUMBEROF.label());
+        System.out.println(itemName + " " + quantity + PrintOutputMessage.NUMBEROF.label());
     }
 
     public static void printoriginTotalPrice() {
