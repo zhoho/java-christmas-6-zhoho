@@ -4,11 +4,11 @@ import camp.nextstep.edu.missionutils.Console;
 import christmas.constant.Constants;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 public class InputView {
-
-    private static Map<String, Integer> menuCountMap = new HashMap<>();
 
     public static int readDate() {
         while (true) {
@@ -29,7 +29,6 @@ public class InputView {
             String input = Console.readLine();
             try {
                 validateMenuFormat(input);
-                validateDuplicateMenu(input);
                 validateValidMenu(input);
                 return input;
             } catch (IllegalArgumentException e) {
@@ -55,20 +54,6 @@ public class InputView {
             String[] parts = item.split("-");
             if (!isNumeric(parts[1].trim())) {
                 throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
-            }
-        }
-    }
-
-    private static void validateDuplicateMenu(String input) {
-        String[] orders = input.split(",");
-        for (String order : orders) {
-            String[] menuAndCount = order.split("-");
-            String menu = menuAndCount[0];
-            int count = Integer.parseInt(menuAndCount[1]);
-            if (menuCountMap.containsKey(menu)) {
-                throw new IllegalArgumentException("[ERROR] 중복된 메뉴가 있습니다. 다시 입력해 주세요.");
-            } else {
-                menuCountMap.put(menu, count);
             }
         }
     }
